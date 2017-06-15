@@ -1,0 +1,16 @@
+<RCC>
+  <qresource prefix="fields">
+    <file>empty_column_bad.png</file>
+    <file>empty_field_1.png</file>
+    <file>yellow_field_1.png</file>
+    <file>red_field_1.png</file>
+    <file>empty_column_good.png</file>
+    <file>empty_column_hover.png</file>
+    <file>red_field.png</file>
+    <file>yellow_field.png</file>
+    <file>empty_column.png</file>
+    <file>color_red.png</file>
+    <file>color_yellow.png</file>
+    <file>empty_field.png</file>
+  </qresource>
+</RCC>
