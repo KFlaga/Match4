@@ -30,9 +30,10 @@ namespace Match4
 		std::unique_ptr<Game> game_;
 		std::unique_ptr<std::thread> serverThread_;
 		bool running_ = true;
+		bool enableLog_;
 	public:
+		Server(bool enableLog = true);
 		~Server();
-		Server();
 
 		void pushRequest(const Message& request);
 		void pushResponse(const Message& response);
@@ -41,6 +42,9 @@ namespace Match4
 		Message getNextResponse();
 
 		Game* getGame() { return game_.get(); }
+		
+		void logMessage(const std::string& msg);
+		void logMessage(const char* msg);
 
 	private:
 		void run();

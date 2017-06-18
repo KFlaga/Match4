@@ -16,12 +16,16 @@ class GameSettingsDialog(QDialog, ui.GameSettingsDialog.Ui_Dialog):
         addDiffPanel_2 = gameSettings.player_2.type == PlayerType.Cpu
 
         self.setupUi(self, addDiffPanel_1, addDiffPanel_2)
+        if addDiffPanel_1:
+            self.gameSettings.player_1.difficulty = 0
+        if addDiffPanel_2:
+            self.gameSettings.player_2.difficulty = 0
 
         self.accepted.connect(self.startGame)
 
     def show(self):
         if (self.gameSettings.player_1.type == PlayerType.Human and
-             self.gameSettings.player_2.type == PlayerType.Human):
+                self.gameSettings.player_2.type == PlayerType.Human):
             self.accept()
             return
 

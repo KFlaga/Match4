@@ -67,6 +67,31 @@ static PyObject* awaitResponse(PyObject* self, PyObject* args)
 	return msgTuple;
 }
 
+// Checks if there are server responses pending.
+// Of there is, returns it, otherwise returns None
+// self: NULL
+// args: { (Capsule)server_handle }
+// return: { (int)type,(int)data0,(int)data1,(int)data2 } or None
+static PyObject* checkResponse(PyObject* self, PyObject* args)
+{
+	ServerHandle handle = getServerHandle(args);
+	if (handle == 0)
+	{
+		return NULL;
+	}
+	int msg[4] = {0,0,0,0};
+	bool gotResponse = Match4::checkResponse(handle, &msg[0]);
+	
+	if(gotResponse)
+	{
+		PyObject* msgTuple = Py_BuildValue("(iiii)", msg[0], msg[1], msg[2], msg[3]);
+		return msgTuple;
+	}
+	
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
 // Converts python tuple to message and sends it to server
 // self: NULL
 // args: { (Capsule)server_handle, (int)type,(int)data0,(int)data1,(int)data2 }
@@ -116,6 +141,7 @@ static PyMethodDef moduleMethods[] =
 	{ "destroyServer",  destroyServer, METH_VARARGS, "" },
 	{ "sendMessage",  sendMessage, METH_VARARGS, "" },
 	{ "awaitResponse",  awaitResponse, METH_VARARGS, "" },
+	{ "checkResponse",  checkResponse, METH_VARARGS, "" },
 	{ "getMessageType",  getMessageType, METH_VARARGS, "" },
 	{NULL, NULL, 0, NULL}        /* Sentinel */
 };

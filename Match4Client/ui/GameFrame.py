@@ -8,38 +8,31 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class Ui_Frame(object):
-    def setupUi(self, Frame):
-        Frame.setObjectName("Frame")
-        Frame.resize(437, 327)
-        Frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        Frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.gridLayout = QtWidgets.QGridLayout(Frame)
+class Ui_GameFrame(object):
+    def setupUi(self, game_frame, board_frame):
+        game_frame.setObjectName("game_frame")
+        game_frame.resize(437, 327)
+        game_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        game_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.gridLayout = QtWidgets.QGridLayout(game_frame)
         self.gridLayout.setObjectName("gridLayout")
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 0, 2, 1, 1)
-        self.boardFrame = QtWidgets.QFrame(Frame)
-        self.boardFrame.setMinimumSize(QtCore.QSize(180, 180))
-        self.boardFrame.setMaximumSize(QtCore.QSize(300, 300))
-        self.boardFrame.setFrameShape(QtWidgets.QFrame.Box)
-        self.boardFrame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.boardFrame.setLineWidth(2)
-        self.boardFrame.setObjectName("boardFrame")
-        self.gridLayout.addWidget(self.boardFrame, 2, 1, 1, 3)
+        self.gridLayout.addWidget(board_frame, 2, 1, 1, 3)
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem1, 2, 0, 1, 1)
-        self.statusText = QtWidgets.QLineEdit(Frame)
+        self.statusText = QtWidgets.QLineEdit(game_frame)
         self.statusText.setMouseTracking(False)
         self.statusText.setAcceptDrops(False)
         self.statusText.setReadOnly(True)
         self.statusText.setObjectName("statusText")
         self.gridLayout.addWidget(self.statusText, 6, 1, 1, 3)
-        self.endButton = QtWidgets.QPushButton(Frame)
+        self.endButton = QtWidgets.QPushButton(game_frame)
         self.endButton.setObjectName("endButton")
         self.gridLayout.addWidget(self.endButton, 7, 3, 1, 1)
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem2, 2, 4, 1, 1)
-        self.playerPanel = QtWidgets.QWidget(Frame)
+        self.playerPanel = QtWidgets.QWidget(game_frame)
         self.playerPanel.setObjectName("playerPanel")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.playerPanel)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
@@ -90,14 +83,14 @@ class Ui_Frame(object):
         self.horizontalLayout.addItem(spacerItem3)
         self.gridLayout.addWidget(self.playerPanel, 3, 1, 1, 3)
 
-        self.retranslateUi(Frame)
-        self.endButton.clicked.connect(Frame.endClicked)
-        QtCore.QMetaObject.connectSlotsByName(Frame)
+        self.retranslateUi(game_frame)
+        self.endButton.clicked.connect(game_frame.endClicked)
+        QtCore.QMetaObject.connectSlotsByName(game_frame)
 
-    def retranslateUi(self, Frame):
+    def retranslateUi(self, game_frame):
         _translate = QtCore.QCoreApplication.translate
-        Frame.setWindowTitle(_translate("Frame", "Frame"))
-        self.statusText.setText(_translate("Frame", "STATUS"))
-        self.endButton.setText(_translate("Frame", "End"))
-        self.currentPlayerLabel.setText(_translate("Frame", "Current Player:"))
-        self.currentPlayerType.setText(_translate("Frame", "Human"))
+        game_frame.setWindowTitle(_translate("game_frame", "game_frame"))
+        self.statusText.setText(_translate("game_frame", "STATUS"))
+        self.endButton.setText(_translate("game_frame", "End"))
+        self.currentPlayerLabel.setText(_translate("game_frame", "Current Player:"))
+        self.currentPlayerType.setText(_translate("game_frame", "Human"))

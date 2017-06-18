@@ -53,19 +53,25 @@ void Game::processHoverRequest(const Message& request)
 	{
 		server_->pushResponse(Message{ MessageType::RespGoodMove, column, 0, 0 });
 	}
-	server_->pushResponse(Message{ MessageType::RespBadMove, column, 0, 0 });
+	else
+	{
+		server_->pushResponse(Message{ MessageType::RespBadMove, column, 0, 0 });
+	}
 }
 
 void Game::processSelectRequest(const Message& request)
 {
 	int column = request.columnData.column;
 	bool isFree = board_.checkColumnIsFree(column);
-
+	server_->logMessage(std::string("Select column: ") + 
+		std::to_string(column) + ". IsFree = " + std::to_string(isFree));
+	
 	if (false == (column >= 0
 		&& column < board_.boardLength &&
 		board_.checkColumnIsFree(column)))
 	{
 		server_->pushResponse(Message{ MessageType::RespBadMove, column, 0, 0 });
+		return;
 	}
 	server_->pushResponse(Message{ MessageType::RespGoodMove, column, 0, 0 });
 

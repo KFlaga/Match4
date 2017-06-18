@@ -8,7 +8,7 @@ using namespace Match4;
 AiRandom::AiRandom(Board* board) :
 	AiEngine(board),
 	generator_(std::chrono::system_clock::now().time_since_epoch().count()),
-	distribution_(1, 5),
+	distribution_(0, 4),
 	player_(0)
 {
 

@@ -192,33 +192,33 @@ namespace Match4
 			return now - startTime_ < maxTime_;
 		}
 
-		int alphabeta(int parent, int depth, int α, int β, int movePlayer, int maximizingPlayer)
+		int alphabeta(int parent, int depth, int alfa, int beta, int movePlayer, int maximizingPlayer)
 		{
 			if (depth == 0)// or node is a terminal node)
 			{
-				return 0;// the heuristic value of node;
+				return heuristic_->findValue(&tree[parent], maximizingPlayer);// the heuristic value of node;
 			}
 			if (movePlayer == maximizingPlayer)
 			{
-				int v = -10000;  //-∞
+				int v = -10000;  //-inf
 				for (int child = NodeTree::child(parent, 0), i = 0; i < 5; ++i, ++child)
 				{
-					v = std::max(v, alphabeta(child, depth - 1, α, β, movePlayer ^ 3, maximizingPlayer));
-					α = std::max(α, v);
-					if (β <= α)
-						break; //(*β cut - off *)
+					v = std::max(v, alphabeta(child, depth - 1, alfa, beta, movePlayer ^ 3, maximizingPlayer));
+					alfa = std::max(alfa, v);
+					if (beta <= alfa)
+						break; //(*beta cut - off *)
 				}
 				return v;
 			}
 			else
 			{
-				int v = 10000;//+∞
+				int v = 10000;//+inf
 				for (int child = NodeTree::child(parent, 0), i = 0; i < 5; ++i, ++child)
 				{
-					v = std::min(v, alphabeta(child, depth - 1, α, β, movePlayer ^ 3, maximizingPlayer));
-					β = std::min(β, v);
-					if (β <= α)
-						break; //(*α cut - off *)
+					v = std::min(v, alphabeta(child, depth - 1, alfa, beta, movePlayer ^ 3, maximizingPlayer));
+					beta = std::min(beta, v);
+					if (beta <= alfa)
+						break; //(*alfa cut - off *)
 				}
 				return v;
 			}
@@ -226,6 +226,11 @@ namespace Match4
 
 	public:
 		int findMove(Board board, const int player)
+		{
+			return findMove_ab(board, player);
+		}
+		
+		int findMove_myAlg(Board board, const int player)
 		{
 			int firstParent = 0;
 			int lastParent = 1;
@@ -246,6 +251,31 @@ namespace Match4
 			}
 			backPropagate();
 			return decideMove();
+		}
+		
+		int findMove_ab(Board board, const int player)
+		{
+			int firstParent = 0;
+			int lastParent = 1;
+			int curLevel = 0;
+			currentLevelPlayer_ = player;
+			positivePlayer_ = player;
+			tree_[0] = Node{ board };
+
+			while (false == isTimedOut() && curLevel < maxLevel_)
+			{
+				createLevel(firstParent, lastParent);
+				prune();
+
+				firstParent = lastParent;
+				lastParent = NodeTree::child(lastParent, 0);
+				currentLevelPlayer_ ^= 3;
+				curLevel += 1;
+			}
+			backPropagate();
+			return decideMove();
+			
+			return 
 		}
 	};
 }

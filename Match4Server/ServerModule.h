@@ -9,6 +9,7 @@ namespace Match4
 	ServerHandle createServer();
 	void destroyServer(ServerHandle handle);
 	void awaitResponse(ServerHandle handle, int* msg);
+	bool checkResponse(ServerHandle handle, int* msg);
 	void sendMessage(ServerHandle handle, int* msg);
 	int getMessageType(const char* typeName);
 }
