@@ -36,3 +36,4 @@
 *.cache
 *.pch
 *.log
+*.pyc
